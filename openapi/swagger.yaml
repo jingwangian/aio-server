@@ -27,6 +27,38 @@ paths:
             text/plain:
               schema:
                 type: string
+  /auth/{user_id}:
+    get:
+      summary: Return JWT token
+      operationId: app.generate_token
+      parameters:
+      - name: user_id
+        description: User unique identifier
+        in: path
+        required: true
+        example: 12
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: JWT token
+          content:
+            'text/plain':
+              schema:
+                type: string
+  /secret:
+    get:
+      summary: Return secret string
+      operationId: app.get_secret
+      responses:
+        '200':
+          description: secret response
+          content:
+            'text/plain':
+              schema:
+                type: string
+      security:
+      - jwt: ['secret']
 
   /related-media/get-entity-tags:
     get:
@@ -57,6 +89,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
+      security:
+        - jwt: ['secret']
 components:
   schemas:
     EntityTag:
@@ -75,3 +110,9 @@ components:
       properties:
         message:
           type: string
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: app.decode_token
