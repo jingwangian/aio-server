@@ -1,0 +1,77 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: A simple related-media servie API
+  license:
+    name: MIT
+servers:
+  - url: http://{host}:8080/v1.0
+    description: The related-media API server
+    variables:
+      host:
+        # note! no enum here means it is an open value
+        enum:
+          - 'localhost'
+        default: 'localhost'
+paths:
+  /:
+    get:
+      operationId: app.hello
+      summary: Hello
+      tags:
+        - hello
+      responses:
+        '200':
+          description: A simple string response
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /relatedmedia/get-entity-tags:
+    get:
+      operationId: api.get_entity_tags
+      summary: Get then entity tag pairs for the media item
+      tags:
+        - Relatedmedia
+      parameters:
+        - name: media_item_id
+          in: query
+          description: media item id
+          required: true
+          schema:
+            type: string
+            example: "123456"
+      responses:
+        '200':
+          description: Return entity tag pairs as result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EntityTag"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    EntityTag:
+      properties:
+        entity:
+          type: string
+          readOnly: true
+          example: "Google Inc"
+        tag:
+          type: string
+          readOnly: true
+          example: "Trump"
+    Error:
+      required:
+        - message
+      properties:
+        message:
+          type: string
