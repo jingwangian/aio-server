@@ -28,7 +28,7 @@ paths:
               schema:
                 type: string
 
-  /relatedmedia/get-entity-tags:
+  /related-media/get-entity-tags:
     get:
       operationId: api.get_entity_tags
       summary: Get then entity tag pairs for the media item
