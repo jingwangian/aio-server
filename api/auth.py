@@ -1,6 +1,8 @@
 import jwt
 import time
+import logging
 
+logger = logging.getLogger(__name__)
 
 JWT_ISSUER = 'com.zalando.connexion'
 JWT_SECRET = 'change_this'
@@ -9,6 +11,7 @@ JWT_ALGORITHM = 'HS256'
 
 
 def login(user_id, password):
+    logger.info(f'login with user{user_id} and password {password}')
     if (user_id != '12345' or password != '123456'):
         return 'Invalid user id or password', 401, {'Access-Control-Allow-Credentials': 'true'}
 
@@ -36,15 +39,11 @@ def decode_token(token):
 
 
 def get_secret(user, token_info) -> str:
-    print(f'user info-->{user}')
-    print(f'token_info-->{token_info}')
-
-    return 'ok'
-
-    # return '''
-    # You are user_id {user} and the secret is 'wbevuec'.
-    # Decoded token claims: {token_info}.
-    # '''.format(user=user['id'], token_info=token_info)
+    logger.info('Enter get_secret function')
+    return '''
+    You are user_id {user} and the secret is 'wbevuec'.
+    Decoded token claims: {token_info}.
+    '''.format(user=user['id'], token_info=token_info)
 
 
 def _current_timestamp() -> int:

@@ -11,16 +11,13 @@ from flask.logging import default_handler
 
 # logging.basicConfig(level=logging.INFO)
 
-print('test', __name__)
+
 logger = logging.getLogger(__name__)
 
 
 def hello():
-    # logger = configure_logger(__name__, '/db/github/api-server/log.txt')
     logger.info('hello: Welcome to related-media server info')
-    logger.warning('hello: Welcome to related-media server warning')
-    logger.error('hello: Welcome to related-media server, error')
-    print('hello: Welcome to related-media server - print')
+
     return 'Welcome to related-media server'
 
 
