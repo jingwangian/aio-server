@@ -1,2 +1,2 @@
-# aio-server
-A aio http server working with swagger
+# api-server
+A simple http server working with swagger
