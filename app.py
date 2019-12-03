@@ -4,50 +4,23 @@ import connexion
 from flask_cors import CORS
 import jwt
 import time
+from logging.config import dictConfig
+from log import configure_logger
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
+
+logger = configure_logger(__name__)
+
+print('test', __name__)
 
 
 def hello():
-    print('hello: Welcome to related-media server')
+    print('name is ', __name__)
+    logger.info('hello: Welcome to related-media server info')
+    logger.warning('hello: Welcome to related-media server warning')
+    logger.error('hello: Welcome to related-media server, error')
+    print('hello: Welcome to related-media server - print')
     return 'Welcome to related-media server'
-
-
-JWT_ISSUER = 'com.zalando.connexion'
-JWT_SECRET = 'change_this'
-JWT_LIFETIME_SECONDS = 600
-JWT_ALGORITHM = 'HS256'
-
-
-def generate_token(user_id):
-    timestamp = _current_timestamp()
-    payload = {
-        "iss": JWT_ISSUER,
-        "iat": int(timestamp),
-        "exp": int(timestamp + JWT_LIFETIME_SECONDS),
-        "sub": str(user_id),
-    }
-
-    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
-
-
-def decode_token(token):
-    try:
-        return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
-    except jwt.exceptions.InvalidTokenError as e:
-        # six.raise_from(Unauthorized, e)
-        raise Exception(f'Invalid Token:{e}')
-
-
-def get_secret(user, token_info) -> str:
-    return '''
-    You are user_id {user} and the secret is 'wbevuec'.
-    Decoded token claims: {token_info}.
-    '''.format(user=user, token_info=token_info)
-
-
-def _current_timestamp() -> int:
-    return int(time.time())
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 import random
 import time
+from flask import request
+import connexion
 
 ENTITY_TAGS = [
     {
@@ -27,8 +29,12 @@ ENTITY_TAGS = [
 ErrorReturnMediaItemIds = ['294292334', '294292330', '294292331']
 
 
-def get_entity_tags(media_item_id):
+def get_entity_tags(media_item_id, user, token_info):
     print(f"get_entity_tags is invoked with id {media_item_id}")
+    print(f'user info-->{user}')
+    print(f'token_info-->{token_info}')
+    print('request-->', request.remote_addr)
+    print('connexion.request-->', connexion.request.remote_addr)
 
     time.sleep(1)
 

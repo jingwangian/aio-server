@@ -27,18 +27,25 @@ paths:
             text/plain:
               schema:
                 type: string
-  /auth/{user_id}:
+  /auth/login:
     get:
       summary: Return JWT token
-      operationId: app.generate_token
+      operationId: api.auth.login
       parameters:
       - name: user_id
         description: User unique identifier
-        in: path
+        in: query
         required: true
-        example: 12
+        example: 12345
         schema:
-          type: integer
+          type: string
+      - name: password
+        description: pass word
+        in: query
+        required: true
+        example: 123456
+        schema:
+          type: string
       responses:
         '200':
           description: JWT token
@@ -49,7 +56,7 @@ paths:
   /secret:
     get:
       summary: Return secret string
-      operationId: app.get_secret
+      operationId: api.auth.get_secret
       responses:
         '200':
           description: secret response
@@ -115,4 +122,4 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      x-bearerInfoFunc: app.decode_token
+      x-bearerInfoFunc: api.auth.decode_token
